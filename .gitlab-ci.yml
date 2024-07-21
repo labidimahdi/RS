@@ -1,0 +1,70 @@
+image: google/cloud-sdk:alpine
+
+stages:
+  - build
+  - deploy
+  - clean
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop"
+      variables:
+        FILE_BRANCH: 'develop'
+        _SERVICE_ACCOUNT: '$SERVICE_ACCOUNT'
+        _SERVICE_ACCOUNT_NAME: '$SERVICE_ACCOUNT_NAME'
+        _PROJECT_ID: '$PROJECT_ID'
+        _SETUP_ENV_SCRIPT: 'setup_env_dev.sh'
+    - if: $CI_COMMIT_BRANCH == "preprod"
+      variables:
+        FILE_BRANCH: 'preprod'
+        _SERVICE_ACCOUNT: '$SERVICE_ACCOUNT'
+        _SERVICE_ACCOUNT_NAME: '$SERVICE_ACCOUNT_NAME'
+        _PROJECT_ID: '$PROJECT_ID'
+        _SETUP_ENV_SCRIPT: 'setup_env_staging.sh'
+    - if: $CI_COMMIT_BRANCH == "main"
+      variables:
+        FILE_BRANCH: 'prod'
+        _SERVICE_ACCOUNT: '$SERVICE_ACCOUNT'
+        _SERVICE_ACCOUNT_NAME: '$SERVICE_ACCOUNT_NAME'
+        _PROJECT_ID: '$PROJECT_ID'
+        _SETUP_ENV_SCRIPT: 'setup_env_prod.sh'
+    - when: always
+
+build:
+  stage: build
+  script:
+    - rm -rf .env
+    - cp deploy/$_SETUP_ENV_SCRIPT .
+    - chmod +x $_SETUP_ENV_SCRIPT
+    - ./$_SETUP_ENV_SCRIPT
+    - echo $_SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+    - gcloud auth activate-service-account $_SERVICE_ACCOUNT_NAME --key-file /tmp/$CI_PIPELINE_ID.json --project=$_PROJECT_ID 
+    - gcloud builds submit --tag gcr.io/$_PROJECT_ID/$CI_PROJECT_NAME --project $_PROJECT_ID --region=europe-west1 --timeout=3h
+  after_script:
+    - rm /tmp/$CI_PIPELINE_ID.json
+    - rm -rf $_SETUP_ENV_SCRIPT
+  only:
+    - main
+    - develop
+
+deploy:
+  stage: deploy
+  script:
+    - echo $_SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+    - gcloud auth activate-service-account $_SERVICE_ACCOUNT_NAME --key-file /tmp/$CI_PIPELINE_ID.json --project=$_PROJECT_ID
+    - gcloud run deploy ${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME} --image gcr.io/$_PROJECT_ID/$CI_PROJECT_NAME --platform managed --region europe-west1 --allow-unauthenticated --project $_PROJECT_ID --labels=cloudrun=$CI_PROJECT_NAME --timeout 60m --memory 1024Mi
+  after_script:
+    - rm /tmp/$CI_PIPELINE_ID.json
+  only:
+    - main
+    - develop
+
+clean_job:
+  stage: clean
+  script:
+    - echo $_SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+    - gcloud auth activate-service-account $_SERVICE_ACCOUNT_NAME --key-file /tmp/$CI_PIPELINE_ID.json --project=$_PROJECT_ID
+    - gcloud container images delete gcr.io/$_PROJECT_ID/$CI_PROJECT_NAME --quiet
+  only:
+    - main
+    - develop

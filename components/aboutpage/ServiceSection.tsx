@@ -1,0 +1,43 @@
+import React from "react";
+import { useTranslations } from "next-intl";
+
+// navigation
+import { Link } from "navigation";
+
+// Components
+import { OutlinedButton } from "../ui/Buttons/OutlinedButton/OutlinedButton";
+import { Section } from "../ui/Sections/Section";
+import { CardSlider } from "../ui/Sliders/CardSlider/CardSlider";
+import { Title } from "../ui/Texts/Title/Title";
+
+// Shared
+import { AboutServiceSectionProps, services } from "shared";
+
+const ServiceSection: React.FC<AboutServiceSectionProps> = ({ data }) => {
+  const t = useTranslations("ServiceSection");
+  return (
+    <Section>
+      <div>
+        <Title className="pt-10 text-center lg:pt-5">
+          {t("ServicesTitle")}
+        </Title>
+        <div className="mx-auto flex h-full w-full justify-center lg:px-10">
+          <CardSlider
+            data={data.services.map((el) => ({
+              icon: el.icon,
+              title: t(el.title),
+              text: t(el.text),
+            }))}
+          />
+        </div>
+        <div className="mt-4 flex justify-center pb-6">
+          <Link href={`/${services}`}>
+            <OutlinedButton text={t("discover")} rounded="rounded-full" className="px-5" />
+          </Link>
+        </div>
+      </div>
+    </Section>
+  );
+};
+
+export default ServiceSection;

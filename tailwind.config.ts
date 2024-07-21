@@ -1,0 +1,227 @@
+import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
+
+const config: Config = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,jsx}",
+    "./ui/**/*.{js,ts,jsx,tsx}",
+    "./ui/**/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    fontFamily: {
+      sans: ["Red Hat Text"],
+    },
+    extend: {
+      
+      colors: {
+        gray: colors.neutral,
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        custom: '0px 0px 20px 0px rgba(0, 0, 0, 0.25)',
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        cta: "url(/assets/contactUsDesktop.svg)",
+        cta_mobile: "url(/assets/contactUs.svg)",
+        wave: "url(/assets/BackgroundImage/wave.svg)",
+        wave_mobile: "url(/assets/BackgroundImage/wave_mobile.svg)",
+        hero: "url(/assets/vectoRrs.svg)",
+        support_bg: "url(/assets/ServicesPageAssets/Support.svg)",
+        mobile_support_bg:
+          "url(/assets/ServicesPageAssets/mobile_support_banner.svg)",
+        banner_about_us: "url(/assets/AboutPageAssets/banner_about_us.svg)",
+        mobile_banner_about_us:
+          "url(/assets/AboutPageAssets/mobile_banner_about_us.svg)",
+        banner_contact_us:
+          "url(/assets/ContactPageAssets/banner_contact_us.svg)",
+        mobile_banner_contact_us:
+          "url(/assets/ContactPageAssets/mobile_banner_contact_us.svg)",
+        banner_Services: "url(/assets/ServicesPageAssets/services_banner.svg)",
+        mobile_banner_Services:
+          "url(/assets/ServicesPageAssets/mobile_services_banner.svg)",
+        banner_oneServices:"url(/assets/ServicesPageAssets/oneservices_banner.svg)",
+        mobile_banner_oneServices:"url(/assets/ServicesPageAssets/mobile_oneservices_banner.svg)",
+        banner_oneServices_data:"url(/assets/ServicesPageAssets/oneservices_banner_data.svg)",
+        mobile_banner_oneServices_data:"url(/assets/ServicesPageAssets/mobile_oneservices_banner_data.svg)",
+        banner_oneServices_cyber:"url(/assets/ServicesPageAssets/oneservices_banner_cyber.svg)",
+        mobile_banner_oneServices_cyber:"url(/assets/ServicesPageAssets/mobile_oneservices_banner_cyber.svg)",
+        banner_oneServices_software:"url(/assets/ServicesPageAssets/oneservices_banner_software.svg)",
+        mobile_banner_oneServices_software:"url(/assets/ServicesPageAssets/mobile_oneservices_banner_software.svg)",
+        banner_oneServices_cloud:"url(/assets/ServicesPageAssets/oneservices_banner_cloud.svg)",
+        mobile_banner_oneServices_cloud:"url(/assets/ServicesPageAssets/mobile_oneservices_banner_cloud.svg)",
+        banner_nearshore:
+          "url(/assets/NearshorePageAssets/nearshore_banner.svg)",
+        mobile_banner_nearshore:
+          "url(/assets/NearshorePageAssets/mobile_nearshore_banner.svg)",
+        banner_career: "url(/assets/CareerPageAssets/career_banner.svg)",
+        mobile_banner_career:
+          "url(/assets/CareerPageAssets/mobile_career_banner.svg)",
+        banner_blog: "url(/assets/BlogPageAssets/banner_blog.svg)",
+        mobile_banner_blog:
+          "url(/assets/BlogPageAssets/mobile_banner_blog.svg)",
+        video: "url(/assets/Hero.gif)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "slidein": "slidein 1s ease var(--slidein-delay, 0) forwards",       
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
+    colors: {
+      ...colors,
+      "primary-color": {
+        100: "#f8c9d2",
+        200: "#f3a6c0",
+        300: "#ef7fab",
+        400: "#ea5094",
+        500: "#e20080",
+        600: "#c71279",
+        700: "#a71a73",
+        800: "#871f6d",
+        900: "#652267",
+      },
+      "secondary-color": {
+        100: "#FCEDF1",
+        200: "#FCE4E9",
+        300: "#FBDBE2",
+        400: "#F9D2DA",
+        500: "#F8C9D2",
+        600: "#E9AAB4",
+        700: "#DB8C98",
+        800: "#CD6E7D",
+        900: "#BF5065",
+      },
+      "tertiary-color": {
+        100: "#F9DCDC",
+        200: "#EDCBCA",
+        300: "#E2BABA",
+        400: "#D7A9A9",
+        500: "#CC9999",
+        600: "#BF8D8C",
+        700: "#B38180",
+        800: "#A77575",
+        900: "#9B6A6A",
+      },
+      "fourth-color": {
+        100: "#F8D8E9",
+        200: "#F6D2E5",
+        300: "#F3CBE1",
+        400: "#F1C4DD",
+        500: "#EEBDD9",
+        600: "#E2AACE",
+        700: "#D698C3",
+        800: "#CA85B8",
+        900: "#BF73AD",
+      },
+      "fifth-color": {
+        100: "#F0C6DF",
+        200: "#E3B1D3",
+        300: "#D69CC6",
+        400: "#CB87BA",
+        500: "#BF73AD",
+        600: "#A75A97",
+        700: "#914384",
+        800: "#7A3174",
+        900: "#652267",
+      },
+      "gray-color": {
+        100: "#EFEFEF",
+        200: "#DCDBDB",
+        300: "#CAC9C9",
+        400: "#B8B7B7",
+        500: "#A6A5A5",
+        600: "#727275",
+        700: "#46474C",
+        800: "#212328",
+        900: "#1D1D1B",
+      },
+      "white-color": "#ffffff",
+      "black-color": {
+        100: "#FDFDFD",
+        200: "#E6E6E6",
+        300: "#CFCFCF",
+        400: "#B7B7B6",
+        500: "#9C9C9C",
+        600: "#818181",
+        700: "#636362",
+        800: "#434342",
+        900: "#1d1d1b",
+      },
+      "danger-color": {
+        100: "#F5AEB1",
+        200: "#F19D99",
+        300: "#EC8B83",
+        400: "#E77A6E",
+        500: "#E26859",
+        600: "#DD5646",
+        700: "#D84334",
+        800: "#D33125",
+        900: "#CF1C17",
+      },
+      "warning-color": {
+        100: "#FCF8D2",
+        200: "#FCF5C0",
+        300: "#FBF1AD",
+        400: "#FBED99",
+        500: "#FAE985",
+        600: "#FAE56E",
+        700: "#F9E255",
+        800: "#F8DE39",
+        900: "#F7DB0C",
+      },
+      "info-color": {
+        100: "#E2F2FB",
+        200: "#D4EAF7",
+        300: "#C6E1F2",
+        400: "#B7D8ED",
+        500: "#A7CFE9",
+        600: "#96C6E4",
+        700: "#85BEE0",
+        800: "#72B5DB",
+        900: "#5CADD6",
+      },
+      "success-color": {
+        100: "#99C31C",
+        200: "#8CBA25",
+        300: "#7DB12B",
+        400: "#6FA930",
+        500: "#60A134",
+        600: "#509937",
+        700: "#40923A",
+        800: "#2C8B3B",
+        900: "#0D843D",
+      },
+      "404": {
+        color: "#FBEBEF",
+      },
+      "purple-gray": {
+        500: "#E0D3E1",
+      },
+      "fluent-gray": {
+        500: "#E20080",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate"),require('@tailwindcss/forms'), require("tailwind-scrollbar")],
+};
+export default config;
